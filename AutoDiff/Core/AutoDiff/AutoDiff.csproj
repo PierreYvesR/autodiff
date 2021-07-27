@@ -2,14 +2,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>library</OutputType>
-    <TargetFrameworks>netstandard1.1;netstandard1.4;netstandard1.6;netstandard2.0;net45;net46;net461;net462;net47</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <Version>1.2.2</Version>
-    <Authors>Alex Shtof</Authors>
+    <Authors>Alex Shtof, Pierre-Yves Rivaille</Authors>
     <Product>AutoDiff</Product>
     <Description>High-performance and high-accuracy automatic function-differentiation library suitable for optimization and numeric computing.</Description>
-	<PackageLicenseUrl>https://raw.githubusercontent.com/alexshtf/autodiff/f7999d23ee903d152a56164aec81389395f244df/license.md</PackageLicenseUrl>
+	  <PackageLicenseUrl>https://raw.githubusercontent.com/alexshtf/autodiff/f7999d23ee903d152a56164aec81389395f244df/license.md</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/alexshtf/autodiff</PackageProjectUrl>
-	<RepositoryUrl>https://github.com/alexshtf/autodiff.git</RepositoryUrl>
+	  <RepositoryUrl>https://github.com/alexshtf/autodiff.git</RepositoryUrl>
     <PackageTags>math;numeric;optimization</PackageTags>
     <LangVersion>6</LangVersion>
   </PropertyGroup>

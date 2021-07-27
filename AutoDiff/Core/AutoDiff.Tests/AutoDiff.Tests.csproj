@@ -4,7 +4,7 @@
   <PropertyGroup>
     <OutputType>library</OutputType>
     <LangVersion>6</LangVersion>
-    <TargetFrameworks>netcoreapp1.1;netcoreapp2.0;net45;net46;net461;net462;net47</TargetFrameworks>
+    <TargetFrameworks>net5.0</TargetFrameworks>
 	  <Authors>Alex Shtof</Authors>
     <IsPackable>false</IsPackable>
   </PropertyGroup>

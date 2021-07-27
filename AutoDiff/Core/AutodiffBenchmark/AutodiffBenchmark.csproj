@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
 	  <OutputType>exe</OutputType>
 	  <Authors>Alex Shtof</Authors>
     <IsPackable>false</IsPackable>
