@@ -76,7 +76,7 @@ namespace AutoDiff
         /// <returns>The value of the function represented by <paramref name="term"/> at the point represented by <paramref name="variables"/>
         /// and <paramref name="point"/>.</returns>
         /// <remarks>The i'th value in <c>point</c> corresponds to the i'th variable in <c>variables</c>.</remarks>
-        public static double Evaluate(this Term term, Variable[] variables, double[] point)
+        public static double Evaluate(this Term term, IReadOnlyList<Variable> variables, IReadOnlyList<double> point)
         {
             return term.Compile(variables).Evaluate(point);
         }

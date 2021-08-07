@@ -45,7 +45,7 @@ namespace AutoDiff
         /// <param name="arg">The point at which to evaluate.</param>
         /// <returns>The value of the function represented by the term at the given point.</returns>
         /// <remarks>The number at <c>arg[i]</c> is the value assigned to the variable <c>Variables[i]</c>.</remarks>
-        double Evaluate(params double[] arg);
+        double Evaluate(IReadOnlyList<double> arg);
 
         /// <summary>
         /// Computes gradient of the compiled term at the given point

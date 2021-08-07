@@ -60,7 +60,7 @@ namespace AutoDiff
                 });
             }
 
-            public TapeElement  Visit(TermPower power)
+            public TapeElement Visit(TermPower power)
             {
                 return Compile(power, () =>
                 {

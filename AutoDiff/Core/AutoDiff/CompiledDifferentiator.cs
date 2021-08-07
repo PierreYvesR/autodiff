@@ -39,10 +39,10 @@ namespace AutoDiff
 
         public IReadOnlyList<Variable> Variables { get; }
 
-        public double Evaluate(double[] arg)
+        public double Evaluate(IReadOnlyList<double> arg)
         {
             Guard.NotNull(arg, nameof(arg));
-            Guard.MustHold(arg.Length == Variables.Count, ErrorMessages.ArgLength);
+            Guard.MustHold(arg.Count == Variables.Count, ErrorMessages.ArgLength);
             EvaluateTape(arg);
             return tape[tape.Length - 1].Value;
         }

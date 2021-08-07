@@ -56,13 +56,28 @@ namespace AutoDiff
                 terms[i] = elemOp(left[i], right[i]);
         }
 
-        private TVec(IReadOnlyList<Term> input, Func<Term, Term> elemOp)
+        public TVec(IReadOnlyList<Term> input, Func<Term, Term> elemOp)
         {
             terms = new Term[input.Count];
             for (var i = 0; i < input.Count; ++i)
                 terms[i] = elemOp(input[i]);
         }
 
+        public TVec(TVec input, Func<Term, Term> elemOp) :
+            this(input.terms, elemOp)
+        {
+        }
+
+        public TVec(TVec left, TVec right, Func<Term, Term, Term> elemOp) :
+            this(left.terms, right.terms, elemOp)
+        {
+        }
+
+        public static TVec Append(TVec left, TVec right)
+        {
+            return new TVec(left.terms.Concat(right.terms));
+        }
+        
         /// <summary>
         /// Gets a vector component given its zero-based index.
         /// </summary>
@@ -78,6 +93,17 @@ namespace AutoDiff
         }
 
         /// <summary>
+        /// Gets a vector slice.
+        /// </summary>
+        /// <param name="start">The vector's component index.</param>
+        /// <param name="end">The vector's component index.</param>
+        /// <returns>The vector component.</returns>
+        public TVec Slice(int start, int end)
+        { 
+            return new TVec( new ArraySegment<Term>( terms, start, end ) ); 
+        }
+
+        /// <summary>
         /// Gets a term representing the squared norm of this vector.
         /// </summary>
         public Term NormSquared
@@ -88,6 +114,11 @@ namespace AutoDiff
                 return TermBuilder.Sum(powers);
             }
         }
+
+        /// <summary>
+        /// Gets the dimensions of this vector
+        /// </summary>
+        public int Length => terms.Length;
 
         /// <summary>
         /// Gets the dimensions of this vector
@@ -203,11 +234,41 @@ namespace AutoDiff
         /// <param name="vector">The vector</param>
         /// <param name="scalar">The scalar</param>
         /// <returns>A product of the vector <paramref name="vector"/> and the scalar <paramref name="scalar"/>.</returns>
+        public static TVec operator*(TVec vector, double scalar)
+        {
+            Guard.NotNull(vector, nameof(vector));
+            return new TVec(vector.terms, x => scalar * x);
+        }
+
+        /// <summary>
+        /// Multiplies a vector by a scalar
+        /// </summary>
+        /// <param name="vector">The vector</param>
+        /// <param name="scalar">The scalar</param>
+        /// <returns>A product of the vector <paramref name="vector"/> and the scalar <paramref name="scalar"/>.</returns>
         public static TVec operator *(Term scalar, TVec vector)
         {
             Guard.NotNull(vector, nameof(vector));
             Guard.NotNull(scalar, nameof(scalar));
             return vector * scalar;
+        }
+
+        /// <summary>
+        /// Multiplies a vector by a constant vector
+        /// </summary>
+        /// <param name="vector">The vector</param>
+        /// <param name="cVector">The constant vector</param>
+        /// <returns>A product of the vector <paramref name="vector"/> and the scalar <paramref name="scalar"/>.</returns>
+        public static TVec operator *(TVec vector, double[] cVector)
+        {
+            Guard.NotNull(vector, nameof(vector));
+            Guard.NotNull(cVector, nameof(cVector));
+            Guard.MustHold(vector.Dimension == cVector.Length, "left and right must be of the same dimension");
+            var terms = new Term[vector.Dimension];
+            for (var i = 0; i < cVector.Length; ++i)
+                terms[i] = vector[i] * cVector[i];
+
+            return new TVec(vector.terms);
         }
 
         /// <summary>
@@ -258,5 +319,11 @@ namespace AutoDiff
                 left.X * right.Y - left.Y * right.X
             );
         }
+        
+        public static TVec Exp(TVec v)
+        {
+            return new TVec(v.terms, Term.Exp);
+        }
+
     }
 }
